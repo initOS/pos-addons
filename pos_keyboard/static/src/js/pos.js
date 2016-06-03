@@ -165,10 +165,11 @@ function pos_keyboard_widgets(instance, module){
                         ok = false;
                     } 
 
-                    if (is_number) {
-                        if (timeStamp + 50 > new Date().getTime()) {
-                            ok = false;
-                        }
+                    // If the last event occurred less than 30 ms ago,
+                    //  we assume that it is a barcode scanner.
+                    // (not a human input)
+                    if (timeStamp + 30 > new Date().getTime()) {
+                        ok = false;
                     }
 
                     timeStamp = new Date().getTime();
