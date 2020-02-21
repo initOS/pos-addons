@@ -103,7 +103,7 @@ odoo.define('pos_keyboard.pos', function (require) {
              }
         }
     });
-    
+
     screens.PaymentScreenWidget.include({
         show: function(){
             this._super();
@@ -114,8 +114,8 @@ odoo.define('pos_keyboard.pos', function (require) {
             this.pos.keypad.connect();
         }
     });
-    
-    // this module mimics a keypad-only cash register. Use connect() and 
+
+    // this module mimics a keypad-only cash register. Use connect() and
     // disconnect() to activate and deactivate it.
     var Keypad = core.Class.extend({
         init: function(attributes){
@@ -177,7 +177,6 @@ odoo.define('pos_keyboard.pos', function (require) {
             var KC_AMT_1 = 80;
             // KeyCode: Discount Percentage [0..100] (Keypad 'd')
             var KC_DISC_1 = 68;
-
             // KeyCode: Backspace (Keypad 'backspace')
             var KC_BACKSPACE = 8;
             // KeyCode: Enter (Keypad 'enter')
@@ -186,8 +185,7 @@ odoo.define('pos_keyboard.pos', function (require) {
             var KC_ESCAPE = 27;
             var kc_lookup = {
                 48: '0', 49: '1', 50: '2',  51: '3', 52: '4',
-                53: '5', 54: '6', 55: '7', 56: '8', 57: '9',
-                80: 'p', 83: 's', 68: 'd', 190: '.', 81: 'q',
+                53: '5', 54: '6', 55: '7', 56: '8', 57: '9', 190: '.',
                 96: '0', 97: '1', 98: '2',  99: '3', 100: '4',
                 101: '5', 102: '6', 103: '7', 104: '8', 105: '9',
                 106: '*', 107: '+', 109: '-', 110: '.', 111: '/'
@@ -215,18 +213,18 @@ odoo.define('pos_keyboard.pos', function (require) {
                         self.data.val = kc_lookup[token];
                         is_number = true;
                         ok = true;
-                    } else if (token === KC_PLU || token === KC_PLU_1) {
+                    } else if (token === KC_PLU) {
                         self.data.type = type.sign;
                         ok = true;
-                    } else if (token === KC_QTY || token === KC_QTY_1) {
+                    } else if (token === KC_QTY) {
                         self.data.type = type.bmode;
                         self.data.val = buttonMode.qty;
                         ok = true;
-                    } else if (token === KC_AMT || token === KC_AMT_1) {
+                    } else if (token === KC_AMT) {
                         self.data.type = type.bmode;
                         self.data.val = buttonMode.price;
                         ok = true;
-                    } else if (token === KC_DISC || token === KC_DISC_1) {
+                    } else if (token === KC_DISC) {
                         self.data.type = type.bmode;
                         self.data.val = buttonMode.disc;
                         ok = true;
@@ -243,7 +241,7 @@ odoo.define('pos_keyboard.pos', function (require) {
                         self.data.type = undefined;
                         self.data.val = undefined;
                         ok = false;
-                    } 
+                    }
 
                     if (is_number) {
                         if (timeStamp + 50 > new Date().getTime()) {
@@ -260,12 +258,12 @@ odoo.define('pos_keyboard.pos', function (require) {
             });
         },
 
-        // stops catching keyboard events 
+        // stops catching keyboard events
         disconnect: function(){
             $('body').off('keyup', '');
         }
     });
-    
+
     return {
         Keypad: Keypad
     };
